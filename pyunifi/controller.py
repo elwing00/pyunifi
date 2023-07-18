@@ -68,7 +68,7 @@ class Controller:  # pylint: disable=R0902,R0904
             port=8443,
             version="v5",
             site_id="default",
-            ssl_verify=True,
+            ssl_verify=False,
     ):
         """
         :param host: the address of the controller host; IP or name
@@ -107,7 +107,8 @@ class Controller:  # pylint: disable=R0902,R0904
             raise APIError("%s controllers no longer supported" % version)
 
         if ssl_verify is False:
-            warnings.simplefilter("default", category=InsecureRequestWarning)
+#            warnings.simplefilter("default", category=InsecureRequestWarning)
+            urllib3.disable_warnings()
 
         self.log.debug("Controller for %s", self.url)
         self._login()
